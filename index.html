@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earn Money by Clicking Ads</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f7f7f7; margin: 0; padding: 0; }
+        h1, h2, h3 { color: #333; }
+        .container { 
+            max-width: 600px; 
+            margin: auto; 
+            background: #fff; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1); 
+            margin-top: 50px;
+        }
+        .container h2 {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        .container button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .container button:hover {
+            background-color: #45a049;
+        }
+        .dashboard h1 {
+            color: #4CAF50;
+            font-size: 28px;
+        }
+        .dashboard button {
+            background-color: #ff9800;
+        }
+        .dashboard button:hover {
+            background-color: #fb8c00;
+        }
+        #dashboard {
+            display: none;
+        }
+        #authMessage { color: #d9534f; }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="auth">
+        <h2>Login / Sign Up</h2>
+        <input type="text" id="username" placeholder="Enter your username">
+        <input type="password" id="password" placeholder="Enter your password">
+        <button onclick="register()">Sign Up</button>
+        <button onclick="login()">Login</button>
+        <p id="authMessage"></p>
+    </div>
+
+    <div class="container dashboard" id="dashboard">
+        <h1>👋 Welcome, <span id="user"></span></h1>
+        <h3>💰 Your balance: <span id="balance">0</span> USD</h3>
+        <button onclick="earnMoney()">✅ Click Ads to Earn</button>
+        <button onclick="logout()">🚪 Logout</button>
+    </div>
+
+    <script>
+        let users = {}; // Data store for users
+        
+        function register() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            if (username && password) {
+                if (!users[username]) {
+                    users[username] = { password: password, balance: 0 };
+                    alert("✅ Account created! Please log in.");
+                } else {
+                    alert("⚠️ Username already taken!");
+                }
+            } else {
+                alert("⚠️ Please enter both username and password!");
+            }
+        }
+
+        function login() {
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            if (users[username] && users[username].password === password) {
+                document.getElementById("auth").style.display = "none";
+                document.getElementById("dashboard").style.display = "block";
+                document.getElementById("user").innerText = username;
+                document.getElementById("balance").innerText = users[username].balance;
+            } else {
+                alert("⚠️ Incorrect username or password!");
+            }
+        }
+
+        function earnMoney() {
+            let username = document.getElementById("user").innerText;
+            if (username) {
+                let adLink = "https://your-ad-link.com"; // Your ad link here
+                alert("✅ Open the ad link to earn money!");
+                window.open(adLink, "_blank");
+                users[username].balance += 5; // Add 5 USD per click
+                document.getElementById("balance").innerText = users[username].balance;
+            }
+        }
+
+        function logout() {
+            document.getElementById("auth").style.display = "block";
+            document.getElementById("dashboard").style.display = "none";
+        }
+    </script>
+
+</body>
+</html> 
